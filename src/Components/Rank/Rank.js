@@ -3,14 +3,17 @@ import React, { useState, useEffect, useCallback } from 'react'
 const Rank = ({name, entries}) => {
   const [emoji, setEmoji] = useState('')
 
-  const generateEmoji = useCallback(async (entries) => { 
-     const data = await fetch(`https://mm3e61swpl.execute-api.us-east-1.amazonaws.com/prod/rank?rank=${entries}`)
-     const resp = await data.json()
-     setEmoji(resp.input)
-  }, [])
+  const handleRank = useCallback(async(entries) => {
+    const resp = await fetch(`https://mm3e61swpl.execute-api.us-east-1.amazonaws.com/prod/rank?rank=${entries}`)
+      const data = await resp.json()
+      console.log(data)
+      setEmoji(data.input)
+  }, [setEmoji])
+
   useEffect(() => { 
-    generateEmoji(entries)
-  }, [generateEmoji, entries])
+    handleRank(entries)
+  }, [entries, handleRank])
+
 
   return (
      <div>
